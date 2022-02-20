@@ -15,8 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - name: Install kagami theme
-        run: git clone https://github.com/jinkanhq/kagami-pelican themes/kagami-pelican
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup python
@@ -25,6 +23,8 @@ jobs:
           python-version: '3.10'
       - name: Install dependencies
         run: pip install pelican[markdown] pelican-webassets cssmin
+      - name: Install kagami theme
+        run: git clone https://github.com/jinkanhq/kagami-pelican themes/kagami-pelican
       - name: Build website
         run: pelican
       - name: Setup SSH
