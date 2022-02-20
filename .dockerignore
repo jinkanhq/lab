@@ -1,0 +1,5 @@
+.vscode
+LICENSE
+README.rst
+output
+*/__pycache__

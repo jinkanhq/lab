@@ -1,0 +1,35 @@
+name: Deployment
+concurrency: production
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout
+      - uses: actions/checkout@v2
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install pelican[markdown] pelican-webassets cssmin
+      - name: Build website
+        run: pelican
+      - name: Setup SSH
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          name: id_ed25519
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      - name: Rsync over SSH
+        run: rsync ./output/ ${{ secrets.REMOTE }}
