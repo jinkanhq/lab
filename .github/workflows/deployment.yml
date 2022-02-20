@@ -34,4 +34,4 @@ jobs:
           name: id_ed25519
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: Rsync over SSH
-        run: rsync ./output/ ${{ secrets.REMOTE }}
+        run: rsync -avz ./output/ ${{ secrets.REMOTE }}
