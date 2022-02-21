@@ -18,8 +18,8 @@ from shields_io_cache import get_svg_filename
 
 AUTHOR = "jinkan.org"
 SITENAME = "人间实验室"
-SITEURL = "https://lab.jinkan.org"
-THEME = "themes/kagami-pelican"
+SITEURL = "http://127.0.0.1:8000"
+THEME = "F:/kagami-pelican"
 
 PATH = "content"
 TIMEZONE = "Asia/Shanghai"
@@ -50,6 +50,8 @@ KAGAMI_COPYRIGHT_HOLDER: str = "Jinkan"
 KAGAMI_COPYRIGHT_YEAR: str = f"2013-{datetime.now().year}"
 KAGAMI_SLOGAN: str = "非典型互联网技术笔记与杂谈"
 KAGAMI_FAVICON: str = "images/favicon.png"
+KAGAMI_ENABLE_ISSO: bool = True
+KAGAMI_ISSO: str = "//comments.jinkan.org/lab/"
 
 # Kagami links
 KAGAMI_FOOTER_LINKS: Tuple[KagamiLink] = (
