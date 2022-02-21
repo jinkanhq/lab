@@ -18,8 +18,8 @@ from shields_io_cache import get_svg_filename
 
 AUTHOR = "jinkan.org"
 SITENAME = "人间实验室"
-SITEURL = "http://127.0.0.1:8000"
-THEME = "F:/kagami-pelican"
+SITEURL = "https://lab.jinkan.org"
+THEME = "themes/kagami-pelican"
 
 PATH = "content"
 TIMEZONE = "Asia/Shanghai"
