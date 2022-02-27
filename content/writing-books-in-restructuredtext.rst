@@ -32,7 +32,7 @@ Sphinx
 
 下面开始安装 Sphinx，然后用 Sphinx 自带的脚本工具\ ``sphinx-quickstart``\ ，根据提示配置基本的目录结构和构建脚本。下面是个人建议的起始配置。
 
-.. code:: bash
+.. code-block:: bash
 
    $ pip install sphinx
    $ mkdir mybook && cd mybook
@@ -110,13 +110,13 @@ Sphinx
 
 这里还启用了 imgmath 扩展，Sphinx 会调用系统环境下的 latex 把数学公式渲染成图片插入到构建好的文档中，这里有一些额外的依赖。笔者是在 WSL 中的 Ubuntu 中操作的，依赖安装方法如下。
 
-.. code:: bash
+.. code-block:: bash
 
    $ sudo apt-get install pdfimages poppler-utils tex-live texstudio texlive texlive-latex-extra dvipng
 
 现在初始化工作就完成了，目录结构应该是这样。
 
-.. code:: bash
+.. code-block:: bash
 
    mybook
    ├── _build
@@ -132,7 +132,7 @@ pandoc
 
 pandoc 是一个 Haskell 编写的万能文档转换工具，可以在 Markdown、reStructuredText、textile、HTML、DocBook、LaTeX、Word 等多种格式中互相转换。这里用 pandoc 把 reStructuredText 转换成\ ``.docx``\ 格式的 Word 文档。基本的用法是这样，把\ ``chpater1.rst``\ 转换成\ ``chapter1.docx``\ 。
 
-.. code:: bash
+.. code-block:: bash
 
    $ pandoc -o chapter1.docx -f rst+east_asian_line_breaks -s chapter1.rst
 
@@ -145,7 +145,7 @@ Sphinx默认会以\ ``index.rst``\ 为入口，依次遍历读取文档，构建
 
 **toc.rst**
 
-.. code:: rst
+.. code-block:: rst
 
    .. toctree::
       :maxdepth: 3
@@ -156,7 +156,7 @@ Sphinx默认会以\ ``index.rst``\ 为入口，依次遍历读取文档，构建
 
 **index.rst**
 
-.. code:: rst
+.. code-block:: rst
 
    .. Mybook documentation master file, created by
       sphinx-quickstart on Thu Oct 19 22:17:03 2018.
@@ -173,7 +173,7 @@ Sphinx默认会以\ ``index.rst``\ 为入口，依次遍历读取文档，构建
 
 接下来读取\ ``contents.inc``\ 中的各章，并调用 pandoc。笔者是用一个简单的 Python 文件完成这一工作的，并直接保存在\ ``mybook``\ 目录下，命名为\ ``build_docx.py``\ 。
 
-.. code:: python
+.. code-block:: python
 
    import os
    import pathlib
@@ -213,7 +213,7 @@ Sphinx默认会以\ ``index.rst``\ 为入口，依次遍历读取文档，构建
 
 然后再为 Makefile 添加 docx 入口，就可以用\ ``make docx``\ 命令直接生成 Word 文档了。
 
-.. code:: makefile
+.. code-block:: makefile
 
    docx: Makefile
        @python build_docx.py
@@ -223,7 +223,7 @@ Sphinx默认会以\ ``index.rst``\ 为入口，依次遍历读取文档，构建
 
 这里的 `.rst` 并非标准 reSturcturedText，而是 Sphinx 扩展的方言版本，一些常用的语法如下所示。
 
-.. code:: rst
+.. code-block:: rst
 
    标题与章节
    #################
@@ -284,7 +284,7 @@ Sphinx默认会以\ ``index.rst``\ 为入口，依次遍历读取文档，构建
 
 另外，中文和内联语法如果没有空格之类的字符隔开，则会出现语法错误。如果直接用空格，那么最终文档中也会有额外的空格。根据\ `reST文档规范 <http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#character-level-inline-markup>`_\ ，可以用反斜线转义空格，具体处理如下。
 
-.. code:: rst
+.. code-block:: rst
 
    天地有\ **大美** \而不言，四时有明法而不议，万物\ [1]_\ 有成理而不说。圣人者，原天地之美而
    达万物之理。是故至人无为，大圣不作，观于天地之谓也。

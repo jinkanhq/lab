@@ -14,7 +14,7 @@ Windows 8 Tips
 
 利用安装镜像，以命令提示符（管理员）运行下面的命令（其中 x:\\ 为挂载镜像的盘符）:
 
-::
+.. code-block:: powershell
 
    Dism /online /enable-feature /featurename:NetFx3 /All /Source:x:\sources\sxs /LimitAccess
 
@@ -47,7 +47,7 @@ Windows 8 会识别出 SSD，本身就提供一些优化，请注意：
 -  **不要禁用**\ 磁盘整理，Windows 会对 SSD 进行 Trim。
 -  **不要禁用** Superfetch 或 Prefetch。注册表默认没有EnableSuperfetch一项：
 
-::
+.. code-block:: registry
 
    [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters]
    "EnablePrefetcher"=dword:00000003

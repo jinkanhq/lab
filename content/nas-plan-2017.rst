@@ -56,7 +56,7 @@ Seagate Enterprise Capacity 7200.5
 
 我的 4 块硬盘都接在 RAID 控制卡上，Seagate 提供的固件升级工具无法识别硬盘，可使用StorCLI 更新固件。
 
-.. code:: bash
+.. code-block:: bash
 
    # 确认控制器序号
    storcli show

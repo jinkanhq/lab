@@ -41,7 +41,7 @@
 在编辑模式下输入\ ``trust``\ 命令，并选择\ ``5 = I trust ultimately``\ ，并通过 ``y`` 确认更改信任等级。
 
 
-::
+.. code-block:: none
 
    gpg> trust
 
@@ -60,7 +60,7 @@
 
 运行如下命令，获取“身份验证（Authentication）”独立子密钥的 KeyGrip。
 
-.. code-block:: powershell
+.. code-block:: none
 
    PS C:\> gpg -K --with-keygrip
    sec#  rsa4096 2020-03-04 [C]
@@ -157,7 +157,7 @@
 
 前文所述的\ ``gpg-agent``\ 、\ ``wsl-ssh-pageant``\ 需要每次开机手工启动，环境变量则是每次重新打开 PowerShell 或命令提示符都需要重新配置，效果并不理想。下面通过一小段 PowerShell，写入系统环境变量，调用任务计划程序完成每次开机后的自启动。
 
-.. code:: powershell
+.. code-block:: powershell
 
    # 设置环境变量
    [Environment]::SetEnvironmentVariable('SSH_AUTH_SOCK', '\\.\pipe\ssh-pageant', [EnvironmentVariableTarget]::User)

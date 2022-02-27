@@ -27,7 +27,7 @@ Ed25519 的安全性在 RSA 2048 与 RSA 4096 之间，且性能在数十倍以�
 
 先上车再解释，让我们直接开始：
 
-.. code:: sh
+.. code-block:: sh
 
    mkdir -p ~/.ssh && cd ~/.ssh
    # 我在 GitHub
@@ -48,7 +48,7 @@ Ed25519 的安全性在 RSA 2048 与 RSA 4096 之间，且性能在数十倍以�
 
 编辑 ~/.ssh/config 文件：
 
-.. code:: sh
+.. code-block:: sh
 
    # 关于别名
    # Host 是别名，HostName 是真正的域名。
@@ -105,7 +105,7 @@ Ed25519 的安全性在 RSA 2048 与 RSA 4096 之间，且性能在数十倍以�
 
 举例：
 
-.. code:: sh
+.. code-block:: sh
 
    ssh-keygen -t rsa -b 4096 -f my_id -C "email@example.com"
 

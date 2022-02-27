@@ -40,13 +40,13 @@ openSUSE 与 RedHat 系一样，使用 RPM 包，但不用\ ``yum``\ ，而且�
 
 在国内网络环境使用，要改成国内的软件源镜像，首先禁用当前所有仓库。
 
-.. code:: bash
+.. code-block:: bash
 
    sudo zypper mr -da
 
 然后添加国内软件源镜像，以腾讯云为例。
 
-.. code:: bash
+.. code-block:: bash
 
    sudo zypper ar -fcg https://mirrors.cloud.tencent.com//opensuse/distribution/leap/\$releasever/repo/oss/ tuna-oss
    sudo zypper ar -fcg https://mirrors.cloud.tencent.com//opensuse/distribution/leap/\$releasever/repo/non-oss/ tuna-non-oss
@@ -57,7 +57,7 @@ openSUSE 与 RedHat 系一样，使用 RPM 包，但不用\ ``yum``\ ，而且�
 
 ``zypper``\ 的常见用法见下。
 
-.. code:: bash
+.. code-block:: bash
 
    zypper ref # 刷新仓库
    zypper patch # 安装所有可用补丁
@@ -70,7 +70,7 @@ openSUSE 与 RedHat 系一样，使用 RPM 包，但不用\ ``yum``\ ，而且�
 5. KVM
 ============
 
-.. code:: bash
+.. code-block:: bash
 
    $ qemu-system-x86_64 --version
    QEMU emulator version 5.2.0 (SUSE Linux Enterprise 15)
@@ -80,7 +80,7 @@ openSUSE 自带的 qemu 版本足够新（默认启用\ ``pc-q35-5.2``\ ），�
 
 在\ ``<hyper-v>``\ 段加入如下内容。
 
-.. code:: xml
+.. code-block:: xml
 
    <relaxed state='on'/>
    <vapic state='on'/>
@@ -91,7 +91,7 @@ openSUSE 自带的 qemu 版本足够新（默认启用\ ``pc-q35-5.2``\ ），�
 
 在\ ``<clock>``\ 段中加入如下内容。
 
-.. code:: xml
+.. code-block:: xml
 
    <clock offset='localtime'>
        <timer name='rtc' tickpolicy='catchup'/>
@@ -123,7 +123,7 @@ SUSE 只支持 NetworkManager 用于带有 SLED 或工作站扩展的桌面工�
 
 第一种方法是修改内核参数，禁用桥接上的 netfilter 功能。在\ ``/etc/systl.conf``\ 中添加如下内容的文件\ ``99-disable-bridge-nf.ini``\ 。
 
-.. code:: ini
+.. code-block:: ini
 
    net.bridge.bridge-nf-call-ip6tables = 0
    net.bridge.bridge-nf-call-iptables = 0

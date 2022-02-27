@@ -25,7 +25,7 @@ Python CAPI 的简单使用
 
 设置默认 Python 路径：
 
-.. code:: bash
+.. code-block:: bash
 
    alias python2='/YourLib/bin/python2.7'
    alias python3='/YourLib/bin/python3.6'
@@ -37,7 +37,7 @@ Python CAPI 的简单使用
 
 由于需要 Python 的库，当使用 cmake 时，需要添加：
 
-.. code:: cmake
+.. code-block:: cmake
 
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I${PROJECT_SOURCE_DIR}/your_path/python3.6/include/python3.6m -I /your_path/python3.6.include/python3.6m -Wno-unused-result -Wsign-compare -DNDEBUG -g -fwrapv -03 -Wall -Wstrict-prototypes")
    set(CMAKE_EXE_LINKER_FLAGS "-L /your_path/python3.6/lib -L /your_path/python3.6/lib -lpython3.6m -lpthread -ldl -lutil -lm -Xlinker -export-dynamic")
@@ -48,7 +48,7 @@ Docker 镜像封装
 
 由于需要将可执行文件放到 Docker 中，这一步骤也花费了一些时间。无此需求的盆友可以略过本小节。
 
-.. code:: docker
+.. code-block:: docker
 
    FROM busybox:1.29.3
    RUN set -ex \
@@ -66,7 +66,7 @@ Docker 镜像封装
 
 后来在 Alpine 上安装 python2 和 python3 共存的环境。
 
-.. code:: docker
+.. code-block:: docker
 
    FROM alpine:3.8
    RUN apk add --no-cache python \
@@ -83,7 +83,7 @@ Docker 镜像封装
 
 最后，放弃 python2，使用 Ubuntu 和 Python3.6 环境。
 
-.. code:: docker
+.. code-block:: docker
 
    FROM python:3.6.10-buster
    RUN apt-get update \
@@ -101,7 +101,7 @@ Docker 镜像封装
    RUN  rm -rf /var/lib/apt/lists/*
    CMD ["bash"]
 
-.. code:: docker
+.. code-block:: docker
 
    FROM python3_ubuntu:v0.0.1
    ENV DEBIAN_FRONTEND = noninteractive
@@ -119,7 +119,7 @@ Docker 镜像封装
 
 编译时可使用参数\ ``-framework Python``：
 
-::
+.. code-block:: bash
    
    gcc(或g++) sample.cpp -o sample -framework Python
 
@@ -131,7 +131,7 @@ Docker 镜像封装
 
 ``Py_Initialize()和Py_Finalize(void);``\ 定义在\ ``pylifecycle.h``\ 中：
 
-.. code:: cpp
+.. code-block:: cpp
 
    PyAPI_FUNC(void) Py_Initialize(void);
    PyAPI_FUNC(void) Py_Finalize(void);
@@ -140,7 +140,7 @@ Docker 镜像封装
 
 以下三个函数也定义在\ ``pylifecycle.h``\ 中。遇到\ ``wchar_t*``\ 参数的时候，可以用\ ``Py_DecodeLocale()``\ 做编码转换。
 
-.. code:: cpp
+.. code-block:: cpp
 
    PyAPI_FUNC(void) Py_SetProgramName(const wchar_t *);
    PyAPI_FUNC(void) Py_SetPythonHome(const wchar_t *);
@@ -150,7 +150,7 @@ Docker 镜像封装
 
 如果遇到：
 
-::
+.. code-block:: bash
 
    Fatal Python error: Py_Initialize: Unable to get the locale encoding
 
@@ -170,7 +170,7 @@ GIL
 
 #. ``int PyGILState_Check()``\ 如果当前线程拥有 GIL 锁，返回 1。
 
-.. code:: cpp
+.. code-block:: cpp
 
    class EnsureGilState {
    public:
@@ -195,19 +195,19 @@ GIL
 
 #. ``PyEval_InitThreads();``\ 初始化并且获取 GIL 锁。应该在主线程调用，在调用其他线程之前。
 
-   .. code:: cpp
+.. code-block:: cpp
 
-      class EnableThreads {
-      public:
-      EnableThreads() {
-          _state = PyEval_SaveThread();
-      }
-      ~EnableThreads() {
-          PyEval_RestoreThread(_state);
-      }
-      private:
-      PyThreadState* _state;
-      };
+   class EnableThreads {
+   public:
+   EnableThreads() {
+         _state = PyEval_SaveThread();
+   }
+   ~EnableThreads() {
+         PyEval_RestoreThread(_state);
+   }
+   private:
+   PyThreadState* _state;
+   };
 
 运行python脚本
 ----------------
@@ -215,14 +215,14 @@ GIL
 
 ``PyRun_SimpleString``\ 定义在\ ``pythonrun.h``\ 中。
 
-.. code:: cpp
+.. code-block:: cpp
 
    PyAPI_FUNC(int) PyRun_SimpleStringFlags(const char *, PyCompilerFlags *);
    # define PyRun_SimpleString(s) PyRun_SimpleStringFlags(s, NULL)
 
 比如：
 
-.. code:: cpp
+.. code-block:: cpp
 
    PyRun_SimpleString("import sys");
    // or
@@ -233,7 +233,7 @@ GIL
 
 ``PyImport_ImportModule``\ 定义在\ ``import.h``
 
-.. code:: C++
+.. code-block:: cpp
 
    PyAPI_FUNC(PyObject *) PyImport_ImportModule(
         const char *name            /* UTF-8 encoded string */
@@ -241,7 +241,7 @@ GIL
 
 例如在同目录下写一个\ ``test_add.py``\ 。
 
-.. code:: python
+.. code-block:: python
 
    def func(a, t_str):
        if (t_str == "" or t_str == None):
@@ -260,14 +260,14 @@ GIL
 
 然后调用。
 
-.. code:: C++
+.. code-block:: cpp
 
    std::string module_name = "test_add"; // test_add.py
    PyObject* pModule = PyImport_ImportModule(module_name.c_str());
 
 其中遇到个问题：
 
-::
+.. code-block:: bash
 
    Undefined symbols for architecture x86_64 ，后面是__basic_string blah blah
 
@@ -281,7 +281,7 @@ GIL
 
 所以，要在获取\ ``pModule``\ 之后加 Check，否则容易引起后续问题。
 
-.. code:: C++
+.. code-block:: cpp
 
    if (!_pModule) {
        PyErr_Print();
@@ -296,7 +296,7 @@ Python 的 C API 有一些关于异常的处理，后面详细讲。
 
 ``PyObject_GetAttrString``
 
-::
+.. code-block:: cpp
 
    PyObject* pTestFunc = PyObject_GetAttrString(pModule, "func");
    // 同上，加一个check。
@@ -313,7 +313,7 @@ Python 的 C API 有一些关于异常的处理，后面详细讲。
 
 比如，我需要把一个值，或者两个值输入到 Python 脚本的\ ``func``\ 函数中。这里的\ ``num``\ 是一个参数，按奇数偶数采取不同的含参数。
 
-.. code:: c++
+.. code-block:: cpp
 
    PyObject* args = nullptr;
    PyObject* arg1 = PyInt_FromLong(100);
@@ -333,14 +333,14 @@ Python 的 C API 有一些关于异常的处理，后面详细讲。
 构建输出对象
 ------------
 
-.. code:: c++
+.. code-block:: cpp
 
    PyObject* pRet = PyObject_CallObject(pFunc, args);
 
 获取结果
 --------
 
-.. code:: c++
+.. code-block:: cpp
 
    int iRet = 0;
    PyArg_Parse(pRet, "i", &iRet);
@@ -359,7 +359,7 @@ Python 的 C API 有一些关于异常的处理，后面详细讲。
  
 在调试多线程时，发现\ ``PyErr_Print()``\ 不能正常调用。如果需要打印 Python 脚本的报错信息，可以用\ ``traceback``\ 记录的内容。
 
-.. code:: C++
+.. code-block:: cpp
 
    void print_err() {
        PyObject* ex = PyErr_Occurred();
@@ -387,7 +387,7 @@ Python 的 C API 有一些关于异常的处理，后面详细讲。
 引用计数
 ~~~~~~~~
 
-.. code:: cpp
+.. code-block:: cpp
 
    void Py_DECREF(PyObject *o);
    void Py_XDECREF(PyObject *o);

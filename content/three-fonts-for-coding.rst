@@ -81,7 +81,7 @@ JetBrains 系 IDE：
 
 VS Code：
 
-.. code:: text
+.. code-block:: text
 
    // 在 settings.json 中添加该行
    // 别忘了逗号
@@ -89,7 +89,7 @@ VS Code：
 
 Windows Terminal：
 
-.. code:: text
+.. code-block:: text
 
    // 在 profiles.json 中，为每个需要设置字体的 profile 都添加该行
    // 别忘了逗号

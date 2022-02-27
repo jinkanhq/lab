@@ -21,7 +21,7 @@ Docker Compose
 
 首先，以下面这个\ ``docker-compose.yml``\ 文件为例，运行一个 WordPress 实例。
 
-.. code:: yaml
+.. code-block:: yaml
 
    version: '3.1'
 
@@ -62,7 +62,7 @@ PHP-FPM 配置
 
 在\ ``/usr/local/etc/php-fpm.conf``\ 文件的最后一行，可以看到下面这行配置。
 
-.. code:: ini
+.. code-block:: ini
 
    include=etc/php-fpm.d/*.conf
 
@@ -70,7 +70,7 @@ PHP-FPM 配置
 
 一是\ ``www.conf``\ 中配置了一个名为\ ``www``\ 的 PHP-FPM 进程池，运行进程的用户和组均为\ ``www-data``\ 。用\ ``id``\ 命令可以看出，\ ``www-data``\ 的 UID 为 82。
 
-.. code:: bash
+.. code-block:: bash
 
    $ id www-data
    uid=82(www-data) gid=82(www-data) groups=82(www-data),82(www-data)
@@ -79,7 +79,7 @@ PHP-FPM 配置
 
 二是\ ``zz-docker.conf``\ 中指定了\ ``www``\ 进程池监听 9000 端口，与 `Dockerfile <https://github.com/docker-library/php/blob/master/7.4/alpine3.12/fpm/Dockerfile#L239>`__ 中\ ``EXPOSE``\ 语句对应。
 
-.. code:: ini
+.. code-block:: ini
 
    [www]
    listen = 9000
@@ -91,7 +91,7 @@ Nginx 配置
 
 这一步，先与大多数 LNMP 套件配置一样，通过 FastCGI 连接到 PHP-FPM，让 Nginx 作为反向代理。在 Nginx 的配置中添加一个\ ``upstream``\ 节，把 WordPress 容器的 9000 端口作为上游。
 
-.. code:: nginx
+.. code-block:: nginx
 
    upstream wordpress {
        server 127.0.0.1:9000;
@@ -99,7 +99,7 @@ Nginx 配置
 
 修改\ ``server``\ 节的根目录为\ ``/somewhere/wordpress``\ 。
 
-.. code:: nginx
+.. code-block:: nginx
 
    server {
        <...>
@@ -108,7 +108,7 @@ Nginx 配置
 
 然后在\ ``server``\ 节中做如下配置，匹配 WordPress 的 URL 重写机制，让 Nginx 直接提供静态文件，并代理 URL 以\ ``.php``\ 结尾的请求，提供给作为上游的 PHP-FPM。
 
-::
+.. code-block:: bash
 
    location / {
        try_files $uri $uri/ /index.php?$args;
@@ -123,13 +123,13 @@ Nginx 配置
 
 大多时候 LNMP 套件中的 PHP-FPM 和 Nginx 都安装在同一台机器上，所以都会配置 FastCGI 参数\ ``SCRIPT_FILENAME``\ 为\ ``$document_root$fastcgi_script_name``\ ，即让 PHP-FPM 以\ ``server``\ 节中配置的\ ``root``\ 为根目录。此时，以\ ``http://example.com/index.php``\ 为例，则会让作为上游的 PHP-FPM 执行\ ``/somewhere/wordpress/index.php``\ 文件，会在 Nginx 日志中得到这样的错误。
 
-::
+.. code-block:: bash
 
    2020/10/11 17:00:14 [error] 101982#101982: *17 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 42.42.42.42, server: example.com, request: "GET / HTTP/1.1", upstream: "fastcgi://127.0.0.1:9000", host: "example.com"
 
 这是因为 WordPress 镜像中，WordPress 代码根目录实际位于\ ``/var/www/html``\ ，也是 PHP-FPM 需要访问的根目录，而镜像中\ ``/somewhere/wordpress``\ 并不存在。因此，需要修改该参数为如下。
 
-.. code:: nginx
+.. code-block:: nginx
 
    location ~ \.php$ {
        <...>

@@ -54,14 +54,14 @@ Armbian是一个面向单板计算机的轻量级Linux发行版，有基于Ubunt
 -  官方地址：\ https://redirect.armbian.com/bananapi/Focal_current.asc
 -  清华镜像：\ https://mirrors.tuna.tsinghua.edu.cn/armbian-releases/bananapi/archive/Armbian_20.08.1_Bananapi_bionic_current_5.8.5.img.xz.asc
 
-.. code:: bash
+.. code-block:: bash
 
    $ gpg --keyserver ha.pool.sks-keyservers.net --recv-key DF00FAF1C577104B50BF1D0093D6889F9F0E78D5
    $ gpg --verify Armbian_20.08.1_Bananapi_bionic_current_5.8.5.img.xz.asc
 
 若输出如下提示，则镜像内容无误，可以进行下一步。
 
-.. code:: bash
+.. code-block:: bash
 
    gpg: assuming signed data in 'Armbian_20.08.1_Bananapi_focal_current_5.8.5.img.xz'
    gpg: Signature made Wed Sep  2 22:58:09 2020 CST
@@ -84,14 +84,14 @@ Welcome to Ubuntu 20.04 with Linux 5.8.5
 
 为了避免在多说无益的国际出口上浪费时间，需要替换软件源地址，以清华镜像为例。
 
-.. code:: bash
+.. code-block:: bash
 
    $ sudo sed -i "s/ports.ubuntu.com/mirrors.tuna.tsinghua.edu.cn\/ubuntu-ports/g" /etc/apt/sources.list
    $ sudo sed -i "s/apt.armbian.com/mirrors.tuna.tsinghua.edu.cn\/armbian/g" /etc/apt/sources.list.d/armbian.list
 
 获取更新信息并更新 Armbian 到最新版本。
 
-.. code:: bash
+.. code-block:: bash
 
    $ sudo apt update && apt upgrade
 
@@ -128,7 +128,7 @@ Armbian 支持的所有全志 A20 设备树覆盖见 https://github.com/armbian/
 
 修改 ``/boot/armbianEnv.txt`` 文件，添加如下内容。
 
-.. code:: ini
+.. code-block:: ini
 
    overlay_prefix=sun7i-a20
    overlays=uart3 pps-gpio
@@ -139,7 +139,7 @@ Armbian 支持的所有全志 A20 设备树覆盖见 https://github.com/armbian/
 
 这样，驱动的配置就与实际针脚连接情况一致了，接下来测试设备是否运行正常。首先是 UART3 设备，可以用 ``dmesg | grep ttyS`` 找到实际设备名并尝试访问。如果卫星导航接收机工作正常，并能与香蕉派正常通信，以 ``/dev/ttyS1`` 为例，输出类似如下的 NMEA 语句。
 
-.. code:: bash
+.. code-block:: bash
 
    $ cat /dev/ttyS1
    $BDGSV,4,4,06,42,,,24,0*71
@@ -149,7 +149,7 @@ Armbian 支持的所有全志 A20 设备树覆盖见 https://github.com/armbian/
 
 同样，用 ``dmesg | grep pps`` 找出 PPS 的实际设备名，安装 PPS 工具集 ``pps-tools``\ ，用 ``ppstest`` 命令来测试 PPS 设备，以 ``/dev/pps0`` 为例，会输出类似如下的内容。
 
-.. code:: bash
+.. code-block:: bash
 
    $ sudo apt install pps-tools
    $ sudo ppstest /dev/ppsx
@@ -162,7 +162,7 @@ Armbian 支持的所有全志 A20 设备树覆盖见 https://github.com/armbian/
 
 如果卫星导航接收机没能获取定位信息（信号不佳或正在启动），那么不会输出 PPS 型号，则会报错。
 
-.. code:: bash
+.. code-block:: bash
 
    trying PPS source "/dev/pps0"
    found PPS source "/dev/pps0"
@@ -176,13 +176,13 @@ Armbian 支持的所有全志 A20 设备树覆盖见 https://github.com/armbian/
 
 首先安装 NTP 服务器。
 
-.. code:: bash
+.. code-block:: bash
 
    $ sudo apt install ntp
 
 修改 NTP 配置文件，在末尾添加如下内容。
 
-.. code:: bash
+.. code-block:: bash
 
    # Generic NMEA GPS Receiver
    server 127.127.20.x mode 16 minpoll 4 maxpoll 4 prefer
@@ -193,7 +193,7 @@ Armbian 支持的所有全志 A20 设备树覆盖见 https://github.com/armbian/
 
 其中 GPS 部分的 ``127.127.20.x`` 为 NTP 中 NMEA 驱动的服务器地址，最后一位的 ``x`` 要替换成 GPS 设备 ``/dev/gpsx`` 的序号。但实际上卫星导航接收机的设备是 ``/dev/ttyS1`` ，这里做一个软连接以供 NTP 使用。
 
-.. code:: bash
+.. code-block:: bash
 
    $ sudo ln -s /dev/ttyS1 /dev/gps1
 
@@ -221,7 +221,7 @@ Armbian 支持的所有全志 A20 设备树覆盖见 https://github.com/armbian/
 
 之后重启 NTP 服务，用 ``ntpq`` 命令检查 GPS 和 PPS 授时状态。
 
-.. code:: bash
+.. code-block:: bash
 
    $ sudo systemctl restart ntp
    $ ntpq -p

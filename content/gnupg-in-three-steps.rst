@@ -43,13 +43,13 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 在命令行中运行下面的命令，其中\ ``--full-gen-key``\ 是\ ``--full-generate-key``\ 参数的简写，允许你手动调整生成密钥对的选项，而不是像\ ``--generate-key``\ 参数采取 GnuPG 的默认值。\ ``--expert``\ 参数则会允许手动调整更多选项，在本教程中是必须的。
 
-.. code:: bash
+.. code-block:: bash
 
    $ gpg --full-gen-key --expert
 
 基于安全考虑，主密钥它仅用于签发子密钥，但不用于加密和签名。主密钥的强度要足够高，但考虑到目前计算机的算力与成本，即便在量子计算机面前，密钥长度较大的RSA密钥依然是足够安全的。因此，这里选择用 RSA 算法签发 4096 位的主密钥。
 
-.. code:: bash
+.. code-block:: bash
 
    gpg (GnuPG) 2.2.4; Copyright (C) 2017 Free Software Foundation, Inc.
    This is free software: you are free to change and redistribute it.
@@ -70,7 +70,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 分别取消主密钥的“加密（Encrypt）”与“签名（Sign）”功能，只留下“认证（Certify）”功能，然后选择“完成（Finished）”。
 
-.. code:: bash
+.. code-block:: bash
 
    Possible actions for a RSA key: Sign Certify Encrypt Authenticate
    Current allowed actions: Sign Certify Encrypt
@@ -104,7 +104,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 设置 RSA 主密钥长度为 4096。
 
-.. code:: bash
+.. code-block:: bash
 
    RSA keys may be between 1024 and 4096 bits long.
    What keysize do you want? (3072) 4096
@@ -112,7 +112,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 设置主密钥的过期时间，可以设置为永不过期。
 
-.. code:: bash
+.. code-block:: bash
 
    Please specify how long the key should be valid.
             0 = key does not expire
@@ -125,7 +125,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 根据提示输入主密钥的标识信息。
 
-.. code:: bash
+.. code-block:: bash
 
    Is this correct? (y/N) y
 
@@ -141,7 +141,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 接下来会提示你输入用于保护主密钥的密码。
 
-.. code:: bash
+.. code-block:: bash
 
    ┌─────────────────────────────────────────────────────┐
    │ Please enter the passphrase to                      │
@@ -156,7 +156,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 如果是在虚拟机中运行 GnuPG，则会因为 Hypervisor 屏蔽了 CPU 的硬件随机数生成器而变慢。
 
-.. code:: bash
+.. code-block:: bash
 
    We need to generate a lot of random bytes. It is a good idea to perform
    some other action (type on the keyboard, move the mouse, utilize the
@@ -172,7 +172,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 至此，就成功生成了一个主密钥。运行\ ``gpg -k``\ 命令列出所有公钥，即可看到刚刚生成的主密钥。
 
-::
+.. code-block:: bash
 
    $ gpg -k
    /home/yinian/.gnupg/pubring.kbx
@@ -188,7 +188,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 我们用\ ``--edit-key``\ 编辑已经生成好的主密钥，进入\ ``gpg``\ 提示符模式，这一步同样需要\ ``--expert``\ 参数来调整更多选项。
 
-.. code:: bash
+.. code-block:: bash
 
    gpg (GnuPG) 2.2.4; Copyright (C) 2017 Free Software Foundation, Inc.
    This is free software: you are free to change and redistribute it.
@@ -205,7 +205,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 下面开始添加第一个子密钥，键入\ ``addkey``\ 命令后会提示选择密钥算法。因为子密钥将用于文件、邮件的加密解密以及 SSH 身份验证等操作，为了兼顾运算速度与安全性，为子密钥选择椭圆曲线算法。第一个子密钥用于签名。
 
-.. code:: bash
+.. code-block:: bash
 
    Please select what kind of key you want:
       (3) DSA (sign only)
@@ -226,7 +226,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 本教程中的子密钥都选择了“Curve 25519”。
 
-::
+.. code-block:: bash
 
    Please select which elliptic curve you want:
       (1) Curve 25519
@@ -241,7 +241,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 同样也要为子密钥设置过期时间，这里设置为 3 年。
 
-::
+.. code-block:: bash
 
    Please specify how long the key should be valid.
             0 = key does not expire
@@ -255,7 +255,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 在最终确认并输入主密钥密码后，又迎来了随机素数生成环节。随后，在结果中可以看到新生成的子密钥。
 
-::
+.. code-block:: bash
 
    Really create? (y/N) y
    We need to generate a lot of random bytes. It is a good idea to perform
@@ -272,7 +272,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 同理，继续生成“加密（Encrypt）”的独立子密钥。
 
-::
+.. code-block:: bash
 
    gpg> addkey
    Please select what kind of key you want:
@@ -291,7 +291,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 生成用于“身份验证（Authentication）”的独立子密钥。
 
-::
+.. code-block:: bash
 
    gpg> addkey
    Please select what kind of key you want:
@@ -337,7 +337,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 最后一个子密钥生成结束后，就会得到如下结果。键入\ ``quit``\ 推出\ ``gpg``\ 提示符模式，并保存子密钥生成的结果。
 
-::
+.. code-block:: bash
 
    sec  rsa4096/E6ED69D1C9149F9B
         created: 2020-04-29  expires: never       usage: C
@@ -365,19 +365,19 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 执行下面的命令，首先备份所有密钥的私钥，放置到一个妥善的地方。其中\ ``-a``\ 参数是\ ``--armor``\ 参数的简写形式，这个参数让\ ``gpg``\ 把输出内容编码成ASCII。
 
-.. code:: bash
+.. code-block:: bash
 
    $ gpg -a --export-secret-key marisa@jinkan.org > secret_key
 
 再单独导出子密钥的私钥。
 
-.. code:: bash
+.. code-block:: bash
 
    $ gpg -a --export-secret-subkeys marisa@jinkan.org > secret_subkeys
 
 考虑到在未来，因为私钥泄露或其他原因想要吊销主密钥，就需要用到吊销证书。我们先导出主密钥的吊销证书。
 
-.. code:: bash
+.. code-block:: bash
 
    $ gpg -a --gen-revoke marisa@jinkan.org > revocation_cert
 
@@ -407,7 +407,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 然后删除主密钥和所有子密钥的私钥。
 
-.. code:: bash
+.. code-block:: bash
 
    $ gpg --delete-secret-keys marisa@jinkan.org
    gpg (GnuPG) 2.2.4; Copyright (C) 2017 Free Software Foundation, Inc.
@@ -421,14 +421,14 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 用\ ``-K``\ 参数列出私钥，没有返回结果，则删除成功。
 
-.. code:: bash
+.. code-block:: bash
 
    $ gpg -K
    $
 
 然后导入刚刚导出的所有子密钥的私钥。
 
-.. code:: bash
+.. code-block:: bash
 
    $ gpg --import secret_subkeys
    gpg: key E6ED69D1C9149F9B: "marisa (Kirisame Marisa) <marisa@jinkan.org>" not changed
@@ -448,13 +448,13 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 可以把公钥发布成文本。
 
-.. code:: bash
+.. code-block:: bash
 
    $ gpg -a --export marisa@jinkan.org > public.gpg
 
 也可以发布到密钥服务器上。
 
-.. code:: bash
+.. code-block:: bash
 
    $ gpg --send-keys marisa@jinkan.org --keyserver hkps://hkps.pool.sks-keyservers.net
 
@@ -463,7 +463,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 如果还能找到“妥善保管”的吊销证书，则可以吊销密钥。
 
-.. code:: bash
+.. code-block:: bash
 
    $ gpg --import revocation_cert
    gpg: key E6ED69D1C9149F9B: "marisa (Kirisame Marisa) <marisa@jinkan.org>" revocation certificate imported
@@ -474,7 +474,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 无论是用\ ``-k``\ 还是\ ``-K``\ 参数，都可以看到密钥已被吊销。
 
-.. code:: bash
+.. code-block:: bash
 
    $ gpg -K
    /home/yinian/.gnupg/pubring.kbx
@@ -485,7 +485,7 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 如果之前已经发布到密钥服务器上，还需要用\ ``--send-keys``\ 参数重新发布吊销信息。
 
-.. code:: bash
+.. code-block:: bash
 
    $ gpg --send-keys marisa@jinkan.org --keyserver hkps://hkps.pool.sks-keyservers.net
 
@@ -498,6 +498,6 @@ GnuPG 是 GNU Privacy Guard 的缩写，它是一个完全开源自由的 OpenPG
 
 另外，运行如下命令即可获取我的 GnuPG 公钥。
 
-.. code:: bash
+.. code-block:: bash
 
    gpg --recv-keys 2FD95EA61B41F507

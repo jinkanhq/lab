@@ -26,19 +26,19 @@ Docker Compose 是一个能把多个容器组合成为一套应用的管理工�
 
 首先来安装 Docker Compose。Ubuntu 下的\ ``docker``\ 包是图形界面托盘\ ``wmdocker``\ 的过渡包，与容器无关。\ ``docker.io``\ 才是本尊。
 
-.. code:: bash
+.. code-block:: bash
 
    $ sudo apt install docker.io docker-compose
 
 把当前用户添加到\ ``docker``\ 组中，就可以免去\ ``sudo``\ 直接调用\ ``docker``\ 和\ ``docker-compose``\ 了。
 
-.. code:: bash
+.. code-block:: bash
 
    $ sudo gpasswd -a $USER docker
 
 确认安装是否成功以及安装的版本。
 
-.. code:: bash
+.. code-block:: bash
 
    $ docker -v
    Docker version 19.03.8, build afacb8b7f0
@@ -47,7 +47,7 @@ Docker Compose 是一个能把多个容器组合成为一套应用的管理工�
 
 若要把 Docker 数据放在默认\ ``/var/lib/docker``\ 以外的位置，可以编辑\ ``/etc/docker/daemon.json``\ 加入以下内容。
 
-.. code:: json
+.. code-block:: json
 
    {
      "data-root": "/data0/dockerlib"
@@ -57,13 +57,13 @@ Docker Compose 是一个能把多个容器组合成为一套应用的管理工�
 
 Ubuntu 中的\ ``dockerd``\ 由\ ``systemd``\ 管理，那么编辑\ ``docker.service``\ 配置。
 
-.. code:: bash
+.. code-block:: bash
 
    $ sudo systemctl edit docker
 
 根据你的代理具体配置，在其中写入下面的内容。
 
-.. code:: ini
+.. code-block:: ini
 
    [Service]
    Environment="HTTPS_PROXY=http://host:port"
@@ -72,7 +72,7 @@ Ubuntu 中的\ ``dockerd``\ 由\ ``systemd``\ 管理，那么编辑\ ``docker.se
 
 保存后，重新加载\ ``systemd``\ 配置文件，检查代理配置。
 
-.. code:: bash
+.. code-block:: bash
 
    $ sudo systemctl daemon-reload
    $ sudo systemctl show --property Environment docker
@@ -80,7 +80,7 @@ Ubuntu 中的\ ``dockerd``\ 由\ ``systemd``\ 管理，那么编辑\ ``docker.se
 
 重启\ ``dockerd``\ 让代理配置生效。
 
-.. code:: bash
+.. code-block:: bash
 
    $ sudo systemctl restart docker
 
@@ -89,7 +89,7 @@ Hello World
 
 运行\ ``hello-world``\ 镜像，确认 Docker 环境配置无误。因为本地没有\ ``hello-world``\ 的镜像，Docker 会自动从 Docker Hub 中拉取。若 Docker 能正常拉取镜像并运行容器，则会输出类似下面的内容。
 
-.. code:: bash
+.. code-block:: bash
 
    $ docker run hello-world
    Unable to find image 'hello-world:latest' locally
@@ -104,7 +104,7 @@ Hello World
 
 用\ ``docker ps``\ 命令即可看到我们用\ ``hello-world``\ 镜像创建的容器，在输出内容后处于正常退出（Exited）状态。
 
-.. code:: bash
+.. code-block:: bash
 
    $ docker ps --all | grep hello-world
    25063973ebe3        hello-world            "/hello"                 28 seconds ago      Exited (0) 27 seconds ago
@@ -124,7 +124,7 @@ NextCloud
 
 笔者根据 NextCloud 官方提供的\ `样例 <https://github.com/nextcloud/docker/tree/master/.examples/docker-compose/insecure/mariadb-cron-redis/fpm>`__\ 做了一些调整。\ ``docker-compose.yml``\ 和涉及的额外文件目录结构如下。
 
-.. code:: bash
+.. code-block:: bash
 
    .
    ├── db.env
@@ -140,7 +140,7 @@ Compose
 
 首先来看\ ``docker-compose.yml``\ 中定义的服务、网络、卷。
 
-.. code:: yaml
+.. code-block:: yaml
 
    version: '3.7'
 
@@ -235,7 +235,7 @@ Compose
 
 ``db.env``\ 中是提供数据库连接信息的环境变量。这 3 个环境变量是 MariaDB 和 NextCloud 共用的。
 
-::
+.. code-block:: bash
 
    MYSQL_PASSWORD=<password>
    MYSQL_DATABASE=nextcloud
@@ -243,7 +243,7 @@ Compose
 
 ``web``\ 文件夹中的\ ``Dockerfile``\  中是构建镜像的指令。
 
-.. code:: docker
+.. code-block:: docker
 
    FROM nginx:stable-alpine
 
@@ -251,7 +251,7 @@ Compose
 
 此处是覆盖\ ``nginx:stable-alpine``\ 中的 ``nginx.conf``\ 。移除样例中的两处 HTTP 301 跳转。
 
-.. code:: diff
+.. code-block:: diff
 
    -        location = /.well-known/carddav {
    -            return 301 $scheme://$host:$server_port/remote.php/dav;
@@ -267,7 +267,7 @@ Gitea
 
 Gitea 的配置就比较简单，除 Gitea 本身之外只需再配置一个 MariaDB 实例。
 
-.. code:: yaml
+.. code-block:: yaml
 
    version: "3.7"
 
@@ -319,14 +319,14 @@ Gitea 的配置就比较简单，除 Gitea 本身之外只需再配置一个 Mar
 
 以 10022 端口为例，修改\ ``/etc/ssh/sshd_config``\ ，注释掉默认的 22 端口，添加 10022 端口。如果启用了防火墙，还需要添加相应规则放行 10022 端口。
 
-::
+.. code-block:: bash
 
    #Port 22
    Port 10022
 
 之后重启\ ``sshd``\ 。
 
-::
+.. code-block:: bash
 
    $ systemctl restart sshd
 
@@ -335,7 +335,7 @@ nginx 反向代理
 
 这个 nginx 实例反向代理其他应用，提供 HTTPS 加密。
 
-::
+.. code-block:: bash
 
    .
    ├── docker-compose.yml
@@ -352,7 +352,7 @@ nginx 反向代理
 
 这里通过构建自定义镜像，把相应域名的 SSL 证书和\ ``nginx.conf``\ 打包到镜像中。
 
-.. code:: docker
+.. code-block:: docker
 
    FROM nginx:stable-alpine
 
@@ -364,7 +364,7 @@ nginx 反向代理
 
 此处的\ ``docker-compose.yaml``\  只定义了服务，且直接使用了 Docker 主机（host）网络。
 
-.. code:: yaml
+.. code-block:: yaml
 
    version: '3.7'
 
@@ -380,7 +380,7 @@ nginx 反向代理
 
 在默认的\ ``nginx.conf``\ 文件\ ``http``\ 块中为每个应用添加类似下面的\ ``server``\ 块。下面的配置以 NextCloud 为例。
 
-.. code:: nginx
+.. code-block:: nginx
 
    server {
        listen 80;
@@ -424,20 +424,20 @@ nginx 反向代理
 
 分别进入各个应用\ ``docker-compose.yml``\ 所在的目录创建并启动相应的容器。下面以 NextCloud 为例。
 
-.. code:: bash
+.. code-block:: bash
 
    $ cd nextcloud
    $ docker-compose up
 
 或者也可以手动指定\ ``docker-compose.yml``\ 。
 
-.. code:: bash
+.. code-block:: bash
 
    $ docker-compose -f /data0/apps/nginx/docker-compose.yml up
 
 之后可以用\ ``ps``\ 查看容器运行状态。
 
-.. code:: bash
+.. code-block:: bash
 
    $ docker-compose ps
          Name                     Command               State           Ports

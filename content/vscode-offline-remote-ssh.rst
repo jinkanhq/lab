@@ -54,14 +54,14 @@ VSCode离线环境求生指南：远程SSH服务器
 
 假设远程机运行的是 64 位的 Linux 系统，利用之前获取的 Commit ID，输入下面的命令即可下载。
 
-.. code:: bash
+.. code-block:: bash
 
    $ commit_id=c47d83b293181d9be64f27ff093689e8e7aed054
    $ curl -sSL "https://update.code.visualstudio.com/commit:${commit_id}/server-linux-x64/stable" -o vscode-server-linux-x64.tar.gz
 
 把下载好的\ ``vscode-server-linux-x64.tar.gz``\ 文件复制到远程机的用户主目录（home directory）中，在远程机上执行如下命令。
 
-.. code:: bash
+.. code-block:: bash
 
    $ commit_id=c47d83b293181d9be64f27ff093689e8e7aed054
    $ mkdir -p ~/.vscode-server/bin/${commit_id}
