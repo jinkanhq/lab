@@ -9,10 +9,13 @@
 :feature: /images/2021/opensuse-cover.jpg
 :abstract: 在 NT 坚持不懈地营业推销下，笔者终于鼓起勇气把搬砖机系统换成了 openSUSE Leap，投入 KDE 的怀抱
 
+.. role:: strike
+   :class: strike
+
 1. 前言
 ===========
 
-笔者不可多说的离线环境中有一台心爱的民族品牌搬砖机，可怜的 Intel 核显只有陈年 2K 屏与之为伴。这时的 Ubuntu 与 GNOME 就成为了双倍的\ [STRIKEOUT:喜悦]\ 摧残，尤其是分数倍缩放的掉帧、画面撕裂，让每一次窗口切换、调整大小都成了立体主义的现场表演。在 NT 坚持不懈地营业推销下，笔者终于鼓起勇气把搬砖机系统换成了 openSUSE Leap，投入 KDE 的怀抱。
+笔者不可多说的离线环境中有一台心爱的民族品牌搬砖机，可怜的 Intel 核显只有陈年 2K 屏与之为伴。这时的 Ubuntu 与 GNOME 就成为了双倍的\ :strike:`喜悦`\ 摧残，尤其是分数倍缩放的掉帧、画面撕裂，让每一次窗口切换、调整大小都成了立体主义的现场表演。在 NT 坚持不懈地营业推销下，笔者终于鼓起勇气把搬砖机系统换成了 openSUSE Leap，投入 KDE 的怀抱。
 
 2. openSUSE 近况
 ===================
@@ -40,24 +43,24 @@ openSUSE 与 RedHat 系一样，使用 RPM 包，但不用\ ``yum``\ ，而且�
 
 在国内网络环境使用，要改成国内的软件源镜像，首先禁用当前所有仓库。
 
-.. code-block:: bash
+.. code-block:: console
 
-   sudo zypper mr -da
+   $ sudo zypper mr -da
 
 然后添加国内软件源镜像，以腾讯云为例。
 
-.. code-block:: bash
+.. code-block:: console
 
-   sudo zypper ar -fcg https://mirrors.cloud.tencent.com//opensuse/distribution/leap/\$releasever/repo/oss/ tuna-oss
-   sudo zypper ar -fcg https://mirrors.cloud.tencent.com//opensuse/distribution/leap/\$releasever/repo/non-oss/ tuna-non-oss
-   sudo zypper ar -fcg https://mirrors.cloud.tencent.com//opensuse/update/leap/\$releasever/oss/ tuna-update-oss
-   sudo zypper ar -fcg https://mirrors.cloud.tencent.com//opensuse/update/leap/\$releasever/non-oss/ tuna-update-non-oss
+   $ sudo zypper ar -fcg https://mirrors.cloud.tencent.com//opensuse/distribution/leap/\$releasever/repo/oss/ tuna-oss
+   $ sudo zypper ar -fcg https://mirrors.cloud.tencent.com//opensuse/distribution/leap/\$releasever/repo/non-oss/ tuna-non-oss
+   $ sudo zypper ar -fcg https://mirrors.cloud.tencent.com//opensuse/update/leap/\$releasever/oss/ tuna-update-oss
+   $ sudo zypper ar -fcg https://mirrors.cloud.tencent.com//opensuse/update/leap/\$releasever/non-oss/ tuna-update-non-oss
 
 参数\ ``-fcg``\ 中的\ ``f``\ 和\ ``g``\ 分别启用了仓库的刷新（Refresh）、GPG 校验（GPG Check）功能。
 
 ``zypper``\ 的常见用法见下。
 
-.. code-block:: bash
+.. code-block:: text
 
    zypper ref # 刷新仓库
    zypper patch # 安装所有可用补丁
@@ -70,7 +73,7 @@ openSUSE 与 RedHat 系一样，使用 RPM 包，但不用\ ``yum``\ ，而且�
 5. KVM
 ============
 
-.. code-block:: bash
+.. code-block:: console
 
    $ qemu-system-x86_64 --version
    QEMU emulator version 5.2.0 (SUSE Linux Enterprise 15)
@@ -131,7 +134,7 @@ SUSE 只支持 NetworkManager 用于带有 SLED 或工作站扩展的桌面工�
 
 用\ ``sysctl``\ 命令重新加载内核参数，即可生效。
 
-::
+.. code-block:: console
 
    # sysctl -p /etc/sysctl.conf
 
@@ -140,14 +143,14 @@ SUSE 只支持 NetworkManager 用于带有 SLED 或工作站扩展的桌面工�
 
 第二种方法就是利用 netfilter 的\ ``physdev``\ 扩展。运行如下命令，确认扩展存在。
 
-::
+.. code-block:: console
 
    $ ls /lib/modules/`uname -r`/kernel/net/netfilter/ | grep physdev
    xt_physdev.ko.xz
 
 因为 openSUSE 自带了 firewalld，那么就不再直接用\ ``iptables``\ 命令操作，而是让 firewalld 来管理\ ``iptables``\ 规则。这里用到了\ ``firewall-cmd``\ 的\ ``--direct``\ 参数调用\ ``physdev``\ 扩展，随后重新加载规则。
 
-::
+.. code-block:: console
 
    # firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -m physdev --physdev-is-bridged -j ACCEPT 
    # firewall-cmd --reload
@@ -161,10 +164,10 @@ SUSE 只支持 NetworkManager 用于带有 SLED 或工作站扩展的桌面工�
 
 所以在 Leap 15.2 中，firewalld 版本只有 0.5.5，就不需要设置网卡所属的区域。而在 Leap 15.3 中，只需要把桥接网卡添加到\ ``libvirt``\ 区域即可放行桥接流量。操作命令如下。
 
-::
+.. code-block:: console
 
-   # firewall-cmd --permanent --add-interface br0 --zone=libvirt
-   # firewall-cmd --reload
+   $ sudo firewall-cmd --permanent --add-interface br0 --zone=libvirt
+   $ sudo firewall-cmd --reload
 
 另外，也可以在 YaST 中直接设置网卡所属的区域。
 
