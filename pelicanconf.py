@@ -22,6 +22,7 @@ SITEURL = "https://lab.jinkan.org"
 THEME = "themes/kagami-pelican"
 
 PATH = "content"
+STATIC_PATHS = ["images", "files"]
 TIMEZONE = "Asia/Shanghai"
 DEFAULT_LANG = "zh-cn"
 DEFAULT_PAGINATION = 10
