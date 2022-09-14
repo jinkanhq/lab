@@ -1,6 +1,6 @@
 OpenLDAP 从零开始：（零）编译安装与初始化
 ############################################
-:date: 2022-09-05 17:33
+:date: 2022-09-10 17:33
 :author: yinian
 :category: Uncategoried
 :tags: OpenLDAP, LDAP
@@ -309,7 +309,7 @@ Argon2 作为密钥派生函数，由 slappasswd 命令生成。
 .. note::
 
   **Argon2** 是一个密钥派生函数，是
-  2015 年\ `密码散列竞赛 <password_hashing_competition>`_\ （Password
+  2015 年\ `密码散列竞赛 <https://password-hashing.net>`_\ （Password
   Hashing Competition）的优胜者，由卢森堡大学的亚历山大·比留科夫（Alex
   Biryukov）、丹尼尔·迪努（Daniel Dinu）和德米特里·霍夫拉托维奇（Dmitry
   Khovratovich）设计。它有三个变体版本。
@@ -318,8 +318,6 @@ Argon2 作为密钥派生函数，由 slappasswd 命令生成。
     可能。
   * Argon2i 可以防范边信道攻击。
   * Argon2id 是混合版本，也是 RFC 9106 推荐的版本。
-
-.. _password_hashing_competition: https://password-hashing.net
 
 之后是 mdb 后端的配置。\ ``olcDbDirectory`` 指定该 mdb 实例的数据目录。\ ``olcDbIndex`` 为制定属性（Attribute）建立索引，例如
 ``olcDbIndex: objectClass eq`` 即为 ``objectClass`` 建立 ``eq`` 类型索引。
@@ -389,9 +387,9 @@ OpenLDAP 中的索引类型有如下四种，对应一些 LDAP 协议规范中�
 4. 小结
 =============
 
-至此，就成功从源码编译安装了 OpenLDAP 服务端和客户端，并初始化了基础配置和数据\
+至此，就成功从源码编译安装了 OpenLDAP 服务器和客户端，并初始化了基础配置和数据\
 库实例，让 slapd 成功运行起来。在下一章中，将介绍如何开启 TLS 保护 LDAP 连接免\
-遭中间人攻击以及如何使用覆盖（Overlay）。
+遭中间人攻击。
 
 `点击此处 </files/2022/slapd.ldif>`_\ 可以下载本章中的配置文件
 ``slapd.ldif``\ 。
