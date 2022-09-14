@@ -2,7 +2,7 @@ import sys
 import pelican
 from pathlib import Path
 from datetime import datetime
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Literal
 from copy import deepcopy
 
 BASE_DIR = Path(__file__).parent.absolute()
@@ -42,7 +42,13 @@ PAGE_SAVE_AS = "pages/{slug}/index.html"
 
 # Plugins
 PLUGIN_PATHS = [str(PLUGIN_DIR)]
-PLUGINS = ["shields_io_cache", "webassets"]
+PLUGINS = ["shields_io_cache", "webassets", "seo", "mathjax"]
+
+# SEO Plugin
+SEO_REPORT = False
+SEO_ENHANCER = True
+SEO_ENHANCER_OPEN_GRAPH = False
+SEO_ENHANCER_TWITTER_CARDS = False
 
 # Kagami globals
 PELICAN_VERSION: str = pelican.__version__
@@ -53,6 +59,7 @@ KAGAMI_SLOGAN: str = "非典型互联网技术笔记与杂谈"
 KAGAMI_FAVICON: str = "images/favicon.png"
 KAGAMI_ENABLE_ISSO: bool = True
 KAGAMI_ISSO: str = "//comments.jinkan.org/lab/"
+KAGAMI_MATHJAX: Literal["jsdelivr", "bootcdn"] = "bootcdn"
 
 # Kagami links
 KAGAMI_FOOTER_LINKS: Tuple[KagamiLink] = (
@@ -122,14 +129,17 @@ KAGAMI_AUTHORS: Dict[str, KagamiAuthor] = {
         "avatar": "/images/authors/shigure.jpg"
     }
 }
+
 KAGAMI_CATEGORIES: Dict[str, KagamiCategory] = {
     "Uncategoried": {
         "display_name": "未分类",
         "description": "找不到分类的迷途羔羊..."
     }
 }
+
 KAGAMI_TAGS: Dict[str, KagamiCategory] = {
 }
+
 KAGAMI_TAXONOMIES: Dict[str, Dict] = {
     "author": KAGAMI_AUTHORS,
     "category": KAGAMI_CATEGORIES,
