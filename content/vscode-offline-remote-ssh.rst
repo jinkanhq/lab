@@ -26,7 +26,7 @@ VSCode离线环境求生指南：远程SSH服务器
 
 打开 VSCode 的“帮助（Help）”菜单，点击“关于（About）”，在弹出的窗口中点击“复制（Copy）”按钮，即可得到类似下面的文本。
 
-::
+.. code-block:: text
 
    Version: 1.42.1 (user setup)
    Commit: c47d83b293181d9be64f27ff093689e8e7aed054
@@ -39,7 +39,7 @@ VSCode离线环境求生指南：远程SSH服务器
 
 中文版为类似下面文本。
 
-::
+.. code-block:: text
 
    版本: 1.42.1 (user setup)
    提交: c47d83b293181d9be64f27ff093689e8e7aed054
