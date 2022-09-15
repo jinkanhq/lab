@@ -4,6 +4,7 @@ from pathlib import Path
 from datetime import datetime
 from typing import Dict, Tuple, Literal
 from copy import deepcopy
+from urllib.parse import urlparse
 
 BASE_DIR = Path(__file__).parent.absolute()
 PLUGIN_DIR = BASE_DIR / "plugins"
@@ -19,6 +20,7 @@ from shields_io_cache import get_svg_filename
 AUTHOR = "jinkan.org"
 SITENAME = "人间实验室"
 SITEURL = "https://lab.jinkan.org"
+SITEDOMAIN = urlparse(SITEURL).hostname
 THEME = "themes/kagami-pelican"
 
 PATH = "content"
