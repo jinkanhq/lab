@@ -7,7 +7,7 @@ OpenLDAP 从零开始：（零）编译安装与初始化
 :slug: openldap-from-scratch
 :status: published
 :feature: /images/2022/pexels-veeterzy-38136.jpg
-:abstract: 从零开始编译安装 OpenLDAP，记录一些配置与最佳实践。
+:abstract: 从零开始编译安装 OpenLDAP，记录一些配置与最佳实践
 
 .. role:: strike
    :class: strike rainbow-animated
