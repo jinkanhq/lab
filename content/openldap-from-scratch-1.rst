@@ -149,14 +149,14 @@ Task Force）确立为标准之一。目前最新的 TLS 版本为 1.3，为同�
 
 之后，只需准备好服务器证书和私钥。
 
-3. 配置 TLS
+4. 配置 TLS
 =====================
 
 这一节仍然需要编写 LDIF 文件，但与初始化时不同，此时已经有配置数据库实例了，不\
 能继续使用 ``slapadd`` 工具，应换用 ``slapmodify`` 工具，为 ``cn=config`` 添加\
 属性（Attribute）。
 
-3.1 证书
+4.1 证书
 -----------
 
 编写如下 LDIF 文件，分别添加 ``olcTLSCACertificateFile``\ 、\ 
@@ -182,7 +182,7 @@ Task Force）确立为标准之一。目前最新的 TLS 版本为 1.3，为同�
 
 这里先保存到 ``tls.ldif`` ，后面用 ``slapmodify`` 工具使其生效。
 
-3.2 TLS 参数
+4.2 TLS 参数
 ----------------
 
 首先，用 ``olcTLSCipherSuite`` 指定密码套件。由于编译时 SSL 依赖选用了
@@ -224,10 +224,10 @@ Secrecy），即便私钥暴露，攻击者也不能解密暴露之前的会话�
 与 ``slapadd`` 相同，\ ``-n`` 参数指定数据库序号。此处需要修改配置数据库中的内\
 容，则指定为 0。
 
-4. 配置安全强度系数
+5. 配置安全强度系数
 ======================
 
-OpenLDAP 中的 **安全强度系数**\ （SSF，Security Strength Factor）用于控制特定\
+OpenLDAP 中的\ **安全强度系数**\ （SSF，Security Strength Factor）用于控制特定\
 操作的密钥强度下限。在 ``olcSecurity`` 中可以配置一组系数，控制不同的操作。
 
 下面列出了几种常见的安全强度系数。
@@ -248,7 +248,7 @@ OpenLDAP 中的 **安全强度系数**\ （SSF，Security Strength Factor）用�
 
 将这段文本保存至 ``ssf.ldif``\ ，用 ``slapdmodify`` 工具使其生效。
 
-5. 测试 TLS 配置
+6. 测试 TLS 配置
 =====================
 
 首先启动 sladp，不指定 ``-d`` 参数，让它运行在后台。
@@ -319,7 +319,7 @@ OpenLDAP 中的 **安全强度系数**\ （SSF，Security Strength Factor）用�
   ldap_start_tls: Connect error (-11)
           additional info: (unknown error code)
 
-4. 小结
+7. 小结
 =============
 
 本章遵循当前 TLS 最佳实践，启用了 TLS 1.2 和 TLS 1.3 并行的配置，为 slapd 配置\
