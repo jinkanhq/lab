@@ -7,7 +7,7 @@ OpenLDAP 从零开始：（一）TLS 配置
 :slug: openldap-from-scratch-1
 :status: published
 :feature: /images/2022/pexels-anton-atanasov-226721.jpg
-:abstract: 从零开始编译安装 OpenLDAP，记录一些配置与最佳实践。
+:abstract: 从零开始编译安装 OpenLDAP，记录一些配置与最佳实践
 
 .. role:: strike
    :class: strike

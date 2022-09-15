@@ -7,7 +7,7 @@
 :slug: build-a-stratum-1-ntp-server-with-banana-pi
 :status: published
 :feature: /images/2020/pexels-skitterphoto-9352.jpg
-:abstract: 由于笔者家境贫寒，翻箱倒柜只能找出一台闲置多年积了厚厚一层灰的香蕉派（Banana Pi BPI-M1），并不能适配树莓派的教程，也就有了这篇笔记。
+:abstract: 由于笔者家境贫寒，翻箱倒柜只能找出一台闲置多年积了厚厚一层灰的香蕉派（Banana Pi BPI-M1），并不能适配树莓派的教程，也就有了这篇笔记
 
 1 前言
 ======
