@@ -16,15 +16,15 @@ jobs:
     environment: production
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.11'
       - name: Install dependencies
         run: pip install pelican[markdown] pelican-webassets cssmin
       - name: Install kagami theme
-        run: git clone https://github.com/jinkanhq/kagami-pelican themes/kagami-pelican
+        run: git clone --depth 1 --branch main https://github.com/jinkanhq/kagami-pelican themes/kagami-pelican
       - name: Build website
         run: pelican
       - name: Setup SSH
