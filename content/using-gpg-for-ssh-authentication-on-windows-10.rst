@@ -74,7 +74,7 @@
    ssb   ed25519 2020-03-04 [A] [expires: 2023-03-04]
          Keygrip = <40位10进制表示>
 
-复制以\ ``[A]``\ 为标识的“身份验证（Authentication）”独立子密钥的 KeyGrip，添加到\ ``%APPDATA\gnupg\sshcontrol``\ 文件中，在注释之后另起一行。
+复制以\ ``[A]``\ 为标识的“身份验证（Authentication）”独立子密钥的 KeyGrip，添加到\ ``%APPDATA%\gnupg\sshcontrol``\ 文件中，在注释之后另起一行。
 
 之后需要启用 GPG 的 Putty 支持，有两种方法。一种通过 GPA 的图形界面配置，另一种则是手写配置文件。
 
