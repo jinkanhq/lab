@@ -66,11 +66,11 @@ Task Force）确立为标准之一。目前最新的 TLS 版本为 1.3，为同�
   subjectKeyIdentifier = hash
   authorityKeyIdentifier = keyid:always,issuer
   basicConstraints = critical, CA:true
-  keyUsage = critical, digitalSignature
+  keyUsage = critical, digitalSignature, keyCertSign
 
 
 把这段内容保存为 ``ca.conf`` 文件，然后执行如下命令，生成根证书的 4096 位 RSA
-私钥，并签发\ :strike:`可以窖藏`\ 20 年的根证书。
+私钥，并签发\ :strike:`可以窖藏` 20 年的根证书。
 
 .. code-block:: console
 
@@ -87,7 +87,7 @@ Task Force）确立为标准之一。目前最新的 TLS 版本为 1.3，为同�
   days                = 365
   default_md          = sha256
   distinguished_name  = req_distinguished_name
-  req_extensions      = v3_req
+  x509_extensions      = v3_server
 
   [ req_distinguished_name ]
   countryName                     = CN
@@ -98,12 +98,12 @@ Task Force）确立为标准之一。目前最新的 TLS 版本为 1.3，为同�
   commonName                      = ldap.jinkan.org
   emailAddress                    = admin@jinkan.org
 
-  [ v3_req ]
+  [ v3_server ]
   basicConstraints = CA:false
   subjectKeyIdentifier = hash
-  authorityKeyIdentifier = keyid,issuer:always
+  authorityKeyIdentifier = keyid:always,issuer:always
   keyUsage = critical, digitalSignature, keyEncipherment
-  extendedKeyUsage = serverAuth
+  extendedKeyUsage = serverAuth, clientAuth
   subjectAltName = @sans
 
   [ sans ]
@@ -114,9 +114,10 @@ Task Force）确立为标准之一。目前最新的 TLS 版本为 1.3，为同�
 
 .. code-block:: console
 
+  $ openssl genrsa -out server.key 2048
   $ openssl req -config server.conf -key server.key -new -out server.csr
   $ openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -out server.crt \
-    -extfile server.conf -extensions v3_req
+    -extfile server.conf -extensions v3_server -CAcreateserial
 
 用根证书验证服务器证书是否有效。
 
