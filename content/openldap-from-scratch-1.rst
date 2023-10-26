@@ -196,9 +196,9 @@ OpenSSL，那么此处填写的密码套件也是 OpenSSL 格式的。向 ``tls.
   add: olcTLSCipherSuite
   olcTLSCipherSuite: ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
 
-这些密码套件中都使用了短暂迪菲-赫尔曼密钥交换（DHE，Diffie-Hellman Key
-Exchange）和短暂椭圆曲线迪菲-赫尔曼密钥交换（ECDHE，Elliptic Curve
-Diffie-Hellman Key Exchange），能提供完全向前保密（PFS，Perfect Forward
+这些密码套件中都使用了瞬现迪菲-赫尔曼密钥交换（DHE，Ephemeral Diffie-Hellman\
+）和瞬现椭圆曲线迪菲-赫尔曼密钥交换（ECDHE，Elliptic Curve Ephemeral
+Diffie-Hellman），能提供完全向前保密（PFS，Perfect Forward
 Secrecy），即便私钥暴露，攻击者也不能解密暴露之前的会话内容。
 
 为此，需要用 ``olcTLSDHParamFile`` 指定 DH 参数。因为服务器私钥为 2048 位，也\
